@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI Calculator</title>
+  <style>
+    /* Styling for the body of the document */
+    body 
+    {
+        /* Set font family */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        background-color: #f8f9fa; /* Set background color */
+        text-align: center; /* Center-align text */
+        margin: 20px; /* Add margin around the body */
+        color: #495057; /* Set text color */
+    }
+
+    /* Styling for h2 elements */
+    h2 {
+        color: #007bff; /* Set color for h2 elements */
+    }
+
+    /* Styling for label elements */
+    label {
+        display: block; /* Make labels block-level elements */
+        margin: 15px 0; /* Add margin above and below labels */
+        font-size: 18px; /* Set font size for labels */
+    }
+
+
+    /* Styling for input elements */
+    input {
+        padding: 12px; /* Set padding for the input */
+        border: 1px solid #ced4da; /* Set border with color for the input */
+        border-radius: 4px; /* Set border radius for rounded corners */
+        margin-top: 5px; /* Add margin above the input */
+        width: 60%; /* Set the width of the input */
+        font-size: 16px; /* Set the font size for the input */
+         /* Include padding and border in the element's total width */
+        box-sizing: border-box;
+    }
+
+    /* Styling for select elements */
+    select {
+        padding: 12px; /* Set padding for the select */
+        border: 1px solid #ced4da; /* Set border with color for the select */
+        border-radius: 4px; /* Set border radius for rounded corners */
+        margin-top: 5px; /* Add margin above the select */
+        width: 20%; /* Set the width of the select */
+        font-size: 16px; /* Set the font size for the select */
+    }
+
+
+    /* Styling for button elements */
+    button {
+        padding: 15px 25px; /* Set padding for the button */
+        margin-top: 20px; /* Add margin above the button */
+        cursor: pointer; /* Set cursor to pointer for better interaction */
+        background-color: #28a745; /* Set background color for the button */
+        color: #fff; /* Set text color for the button */
+        border: none; /* Remove border for a clean appearance */
+        border-radius: 4px; /* Set border radius for rounded corners */
+        font-size: 18px; /* Set font size for the button */
+        /* Add smooth transition for background color */
+        transition: background-color 0.3s ease; 
+    }
+
+    /* Styling for button elements on hover */
+    button:hover {
+        background-color: #218838; /* Set background color on hover */
+    }
+
+    /* Styling for result element */
+    #result {
+        margin-top: 30px; /* Add margin above the result */
+        font-weight: bold; /* Set bold font weight for the result */
+        font-size: 24px; /* Set font size for the result */
+        color: #dc3545; /* Set text color for the result */
+    }
+
+  </style>
+</head>
+<body>
+    <!-- Heading for the BMI Calculator -->
+    <h2>BMI Calculator</h2>
+
+    <!-- Label and input for entering height, with unit selection -->
+    <label>
+        Height:
+        <input type="number" id="height" placeholder="Enter height">
+        <select id="heightUnit">
+            <option value="cm">cm</option>
+            <option value="in">in</option>
+        </select>
+    </label>
+
+    <!-- Label and input for entering weight, with unit selection -->
+    <label>
+        Weight:
+        <input type="number" id="weight" placeholder="Enter weight">
+        <select id="weightUnit">
+            <option value="kg">kg</option>
+            <option value="lb">lb</option>
+        </select>
+    </label>
+
+    <!-- Button to trigger the BMI calculation -->
+    <button onclick="calculateBMI()">Calculate BMI</button>
+
+    <!-- Container to display the result -->
+    <div id="result"></div>
+    
+  <script>
+    // Function to calculate BMI based on user input
+    function calculateBMI() {
+        // Get the height, weight, and units from the input fields
+        const height = parseFloat(document.getElementById('height').value);
+        const weight = parseFloat(document.getElementById('weight').value);
+        const heightUnit = document.getElementById('heightUnit').value;
+        const weightUnit = document.getElementById('weightUnit').value;
+
+        let bmi; // Variable to store the calculated BMI
+
+        // Check if the height unit is in inches
+        if (heightUnit === 'in') {
+            // Convert height to meters if the unit is inches
+            bmi = (weight / Math.pow(height * 0.0254, 2)).toFixed(2);
+        } else {
+            // Use the metric formula if the units are 
+            // in centimeters and kilograms
+            bmi = (weight / Math.pow(height / 100, 2)).toFixed(2);
+        }
+
+        // Call the function to display the result
+        displayResult(bmi);
+    }
+
+
+    // Function to display the BMI result and classification
+    function displayResult(bmi) {
+        // Get the HTML element where the result will be displayed
+        let resultElement = document.getElementById('result');
+  
+        // Variable to store the BMI classification
+        let classification;
+
+        // Check BMI range and assign the appropriate classification
+        if (bmi < 18.5) {
+            classification = 'Underweight';
+        } else if (bmi < 24.9) {
+            classification = 'Normal weight';
+        } else if (bmi < 29.9) {
+            classification = 'Overweight';
+        } else {
+            classification = 'Obese';
+        }
+
+        // Set the HTML content to display the BMI result and classification
+        resultElement.innerHTML = `Your BMI is: ${bmi}<br>Classification: ${classification}`;
+    }
+  </script>
+</body>
+</html>
